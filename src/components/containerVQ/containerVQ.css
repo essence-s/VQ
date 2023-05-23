@@ -1,0 +1,35 @@
+.containervq {
+    max-width: 1200px;
+    padding: 80px;
+    margin: auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.containervq__title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.containervq__videoContent {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.containervq__sendButton {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+
+}
+
+.containervq__sendButton button {
+    background: #ed4040;
+    padding: 15px 50px;
+    border: 0;
+    border-radius: 8px;
+    color: white;
+}

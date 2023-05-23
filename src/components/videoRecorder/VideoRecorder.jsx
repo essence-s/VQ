@@ -203,19 +203,18 @@ const VideoRecorder = () => {
             </div> */}
             {isRecording && <div className="rec">{timeFormater(timeCounter) + '/' + timeFormater(totalDuration)}< div className="rec-circle"></div></div>}
 
-            {
-                isRecording ? <div>
-                    <video ref={videoRef} autoPlay muted playsInline></video>
-                </div> :
-                    <div>
-                        {downloadLink && <video src={downloadLink} controls></video>}
-                        {downloadLink && (
-                            <a href={downloadLink} download="file.mp4">
-                                Descargar
-                            </a>
-                        )}
-                    </div>
-            }
+            <div style={isRecording ? {} : { display: 'none' }}>
+                <video ref={videoRef} autoPlay muted playsInline></video>
+            </div>
+            <div style={isRecording ? {} : { display: 'none' }}>
+                {downloadLink && <video src={downloadLink} controls></video>}
+                {downloadLink && (
+                    <a href={downloadLink} download="file.mp4">
+                        Descargar
+                    </a>
+                )}
+            </div>
+
 
 
             <div className="option-VQ">

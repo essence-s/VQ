@@ -40,6 +40,15 @@ const ModalVideo = () => {
         }
     }
 
+    const ant = () => {
+        if (indexMV > 0) {
+            setIndexMV(indexMV - 1)
+        }
+    }
+
+    const terminar = () => {
+        handleClose()
+    }
     return (
         <>
             <Modal
@@ -56,7 +65,9 @@ const ModalVideo = () => {
                             dsds
                         </div>
                         <CardVideo index={indexMV} width={600} dataVideo={dataVQ[indexMV]}></CardVideo>
-                        <Button onClick={ccc}>{dataVQ.every((el) => el.answered == true) ? 'Terminar' : 'Siguiente'}</Button>
+                        <Button onClick={ant}>Anterior</Button>
+                        <Button onClick={ccc}>Siguiente</Button>
+                        <Button onClick={terminar} style={dataVQ.every((el) => el.answered == true) ? {} : { display: 'none' }}>Terminar</Button>
 
                     </div>
                 </Box>

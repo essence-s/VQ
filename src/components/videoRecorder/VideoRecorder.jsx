@@ -7,7 +7,7 @@ import PhotoCameraFrontIcon from '@mui/icons-material/PhotoCameraFront';
 import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
 // import { set } from "lodash";
 
-const VideoRecorder = ({ fff, width, dataVideo, setVideos }) => {
+const VideoRecorder = ({ fff, width, dataVideo, videos, setVideos }) => {
     const [isRecording, setIsRecording] = useState(false);
     const videoRef = useRef(null);
     const streamRef = useRef(null);
@@ -24,6 +24,12 @@ const VideoRecorder = ({ fff, width, dataVideo, setVideos }) => {
     const [timeCounter, setTimeCounter] = useState(0)
     const totalDuration = 120
     const interval = useRef(null)
+
+    useEffect(() => {
+        console.log(dataVideo)
+        console.log(videos)
+        setDownloadLink(videos.find((d) => d.idVideo == dataVideo.id)?.data ?? '')
+    }, [dataVideo])
 
     let clearIntervalTimerCounter = () => {
         console.log(':V clear  ')
@@ -99,13 +105,13 @@ const VideoRecorder = ({ fff, width, dataVideo, setVideos }) => {
                     if (d.idVideo !== dataVideo.id) return d
                     return {
                         ...d,
-                        data: blob
+                        data: URL.createObjectURL(blob)
                     }
                 })
             } else {
                 return [...sv, {
                     idVideo: dataVideo.id,
-                    data: blob
+                    data: URL.createObjectURL(blob)
                 }]
             }
 

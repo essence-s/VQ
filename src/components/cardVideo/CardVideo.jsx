@@ -17,9 +17,10 @@ const CardVideo = ({ dataVideo, width, index }) => {
         handleOpen()
     }
 
-    useEffect(() => {
-        console.log(dataVideo)
-    }, [dataVideo])
+    // useEffect(() => {
+    //     console.log(dataVideo)
+
+    // }, [dataVideo])
 
     let fff = (dtra) => {
         setDataVQ((prev) =>
@@ -37,7 +38,7 @@ const CardVideo = ({ dataVideo, width, index }) => {
     return (
         <div className="video-card" style={{ width }}>
             <div className="video-card__video">
-                <VideoRecorder setVideos={setVideos} fff={fff} dataVideo={dataVideo} width={width}></VideoRecorder>
+                <VideoRecorder videos={videos} setVideos={setVideos} fff={fff} dataVideo={dataVideo} width={width}></VideoRecorder>
             </div>
             <div className="video-card__question-box" onClick={handleOandM}>
                 <div className="video-card__question-square"></div>

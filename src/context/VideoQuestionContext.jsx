@@ -31,11 +31,14 @@ let videoList = [
     }
 ]
 
+// let videosArray = []
+
 // const videoListById = keyBy(videoList, "id")
 // console.log(videoListById)
 
 const VQProvider = ({ children, data }) => {
     let [dataVQ, setDataVQ] = useState(videoList)
+    let [videos, setVideos] = useState([])
 
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true)
@@ -46,6 +49,9 @@ const VQProvider = ({ children, data }) => {
     useEffect(() => {
         console.log(dataVQ)
     }, [dataVQ])
+    useEffect(() => {
+        console.log(videos)
+    }, [videos])
 
     return (
         <VQContext.Provider value={{
@@ -53,6 +59,7 @@ const VQProvider = ({ children, data }) => {
             dataVQ, setDataVQ,
             open, handleClose, handleOpen,
             indexVQ,
+            videos, setVideos,
 
         }}>
             {children}

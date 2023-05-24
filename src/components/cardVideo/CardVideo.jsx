@@ -2,6 +2,7 @@ import { Button } from "@mui/material"
 import useVideoQuestion from "../../hooks/useVideoQuestion"
 import "./cardVideo.css"
 import VideoRecorder from "../videoRecorder/VideoRecorder"
+import { useEffect } from "react"
 
 
 
@@ -9,12 +10,16 @@ import VideoRecorder from "../videoRecorder/VideoRecorder"
 
 const CardVideo = ({ dataVideo, width, index }) => {
 
-    let { handleOpen, indexVQ, setDataVQ } = useVideoQuestion()
+    let { handleOpen, indexVQ, setDataVQ, videos, setVideos } = useVideoQuestion()
 
     let handleOandM = () => {
         indexVQ.current = dataVideo.id
         handleOpen()
     }
+
+    useEffect(() => {
+        console.log(dataVideo)
+    }, [dataVideo])
 
     let fff = (dtra) => {
         setDataVQ((prev) =>
@@ -32,7 +37,7 @@ const CardVideo = ({ dataVideo, width, index }) => {
     return (
         <div className="video-card" style={{ width }}>
             <div className="video-card__video">
-                <VideoRecorder fff={fff} dataVideo={dataVideo} width={width}></VideoRecorder>
+                <VideoRecorder setVideos={setVideos} fff={fff} dataVideo={dataVideo} width={width}></VideoRecorder>
             </div>
             <div className="video-card__question-box" onClick={handleOandM}>
                 <div className="video-card__question-square"></div>

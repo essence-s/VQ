@@ -7,7 +7,7 @@ import PhotoCameraFrontIcon from '@mui/icons-material/PhotoCameraFront';
 import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
 // import { set } from "lodash";
 
-const VideoRecorder = ({ fff, width, dataVideo }) => {
+const VideoRecorder = ({ fff, width, dataVideo, setVideos }) => {
     const [isRecording, setIsRecording] = useState(false);
     const videoRef = useRef(null);
     const streamRef = useRef(null);
@@ -93,7 +93,24 @@ const VideoRecorder = ({ fff, width, dataVideo }) => {
             type: "video/x-matroska;codecs=avc1,opus",
         });
         setDownloadLink(URL.createObjectURL(blob));
+        setVideos((sv) => {
+            if (sv.some((dd) => dd.idVideo == dataVideo.id)) {
+                return sv.map((d) => {
+                    if (d.idVideo !== dataVideo.id) return d
+                    return {
+                        ...d,
+                        data: blob
+                    }
+                })
+            } else {
+                return [...sv, {
+                    idVideo: dataVideo.id,
+                    data: blob
+                }]
+            }
 
+
+        })
 
 
         chunks.current = [];
@@ -112,7 +129,8 @@ const VideoRecorder = ({ fff, width, dataVideo }) => {
             clearIntervalTimerCounter()
             fff({
                 ...dataVideo,
-                answered: true
+                answered: true,
+
             })
         }, 100)
 

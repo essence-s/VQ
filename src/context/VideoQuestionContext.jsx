@@ -1,4 +1,4 @@
-import { createContext, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { keyBy } from "lodash";
 
 const VQContext = createContext()
@@ -42,6 +42,10 @@ const VQProvider = ({ children, data }) => {
     const handleClose = () => setOpen(false)
 
     let indexVQ = useRef()
+
+    useEffect(() => {
+        console.log(dataVQ)
+    }, [dataVQ])
 
     return (
         <VQContext.Provider value={{

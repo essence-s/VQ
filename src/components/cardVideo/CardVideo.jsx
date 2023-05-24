@@ -7,18 +7,32 @@ import VideoRecorder from "../videoRecorder/VideoRecorder"
 
 
 
-const CardVideo = ({ dataVideo }) => {
+const CardVideo = ({ dataVideo, width, index }) => {
 
-    let { handleOpen, indexVQ } = useVideoQuestion()
+    let { handleOpen, indexVQ, setDataVQ } = useVideoQuestion()
 
     let handleOandM = () => {
         indexVQ.current = dataVideo.id
         handleOpen()
     }
+
+    let fff = (dtra) => {
+        setDataVQ((prev) =>
+            prev.map((d) => {
+                if (d.id !== dtra.id) return d
+
+                return {
+                    ...d,
+                    ...dtra
+                }
+            })
+        )
+    }
+
     return (
-        <div className="video-card">
+        <div className="video-card" style={{ width }}>
             <div className="video-card__video">
-                <VideoRecorder></VideoRecorder>
+                <VideoRecorder fff={fff} dataVideo={dataVideo} width={width}></VideoRecorder>
             </div>
             <div className="video-card__question-box" onClick={handleOandM}>
                 <div className="video-card__question-square"></div>

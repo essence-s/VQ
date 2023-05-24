@@ -5,9 +5,9 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import PhotoCameraFrontIcon from '@mui/icons-material/PhotoCameraFront';
 import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
-import { set } from "lodash";
+// import { set } from "lodash";
 
-const VideoRecorder = () => {
+const VideoRecorder = ({ fff, width, dataVideo }) => {
     const [isRecording, setIsRecording] = useState(false);
     const videoRef = useRef(null);
     const streamRef = useRef(null);
@@ -110,6 +110,10 @@ const VideoRecorder = () => {
         setTimeout(() => {
             setIsRecording(false);
             clearIntervalTimerCounter()
+            fff({
+                ...dataVideo,
+                answered: true
+            })
         }, 100)
 
 
@@ -136,8 +140,8 @@ const VideoRecorder = () => {
                     },
                     video: {
                         deviceId: videoSource !== "" ? { exact: videoSource } : undefined,
-                        width: { ideal: 100 },
-                        height: { ideal: 150 },
+                        width: { ideal: width },
+                        height: { ideal: 330 },
                     },
                 };
                 try {
@@ -206,13 +210,13 @@ const VideoRecorder = () => {
             <div style={isRecording ? {} : { display: 'none' }}>
                 <video ref={videoRef} autoPlay muted playsInline></video>
             </div>
-            <div style={isRecording ? {} : { display: 'none' }}>
-                {downloadLink && <video src={downloadLink} controls></video>}
-                {downloadLink && (
+            <div style={!isRecording ? {} : { display: 'none' }}>
+                {downloadLink && <video style={{ width }} src={downloadLink} controls></video>}
+                {/* {downloadLink && (
                     <a href={downloadLink} download="file.mp4">
                         Descargar
                     </a>
-                )}
+                )} */}
             </div>
 
 

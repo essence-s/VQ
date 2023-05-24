@@ -55,7 +55,7 @@ const ModalVideo = () => {
                         <div className="contentVideo">
                             dsds
                         </div>
-                        <CardVideo dataVideo={dataVQ[indexMV]}></CardVideo>
+                        <CardVideo index={indexMV} width={600} dataVideo={dataVQ[indexMV]}></CardVideo>
                         <Button onClick={ccc}>{dataVQ.every((el) => el.answered == true) ? 'Terminar' : 'Siguiente'}</Button>
 
                     </div>

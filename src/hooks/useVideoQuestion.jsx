@@ -11,7 +11,7 @@ const useVideoQuestion = () => {
 
 
     return {
-        dataVQ, getDataVQ,
+        dataVQ, setDataVQ,
         open, handleClose, handleOpen,
         indexVQ,
     }

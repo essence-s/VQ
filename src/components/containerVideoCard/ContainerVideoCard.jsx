@@ -28,7 +28,7 @@ const ContainerVideoCard = () => {
         // onSwiper={(swiper) => console.log(swiper)}
         >
             {dataVQ.map((dataVideodadda, i) => <SwiperSlide key={i + 'cvc'}>
-                <CardVideo dataVideo={dataVideodadda}></CardVideo>
+                <CardVideo index={i} width={200} dataVideo={dataVideodadda}></CardVideo>
             </SwiperSlide>)}
         </Swiper>
     )

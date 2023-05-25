@@ -5,6 +5,10 @@ import useVideoQuestion from "../../hooks/useVideoQuestion";
 import CardVideo from "../cardVideo/CardVideo";
 
 
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import BlockIcon from '@mui/icons-material/Block';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+
 
 const ModalVideo = () => {
 
@@ -22,27 +26,21 @@ const ModalVideo = () => {
 
     // let [nextOrSend, setNextOrSend] = useState(true)
     let [indexMV, setIndexMV] = useState(0)
-    const { dataVQ, setDataVQ, open, handleClose, indexVQ, somethingRecording } = useVideoQuestion()
+    const { dataVQ, setDataVQ, open, handleClose, indexVQ, setIndexVQ, somethingRecording } = useVideoQuestion()
 
 
-    let stopFunction = useRef()
 
-    // let dino = () => {
-    //     stopFunction.current.stopRecording()
-    // }
+
+
 
     useEffect(() => {
-        // setTimeout(() => {
-        console.log(indexVQ.current)
-        // }, 4000)
 
-        let indexArray = dataVQ.findIndex((d) => d.id == indexVQ.current)
-        setIndexMV(indexArray)
+        setIndexMV(indexVQ)
 
-    }, [indexVQ.current])
+    }, [indexVQ])
 
     const ccc = () => {
-        stopFunction.current.stopRecording()
+
 
         if (indexMV < dataVQ.length - 1) {
             setIndexMV(indexMV + 1)
@@ -58,6 +56,7 @@ const ModalVideo = () => {
 
     const terminar = () => {
         handleClose()
+        setIndexVQ('')
     }
     return (
         <>
@@ -69,15 +68,29 @@ const ModalVideo = () => {
             >
                 <Box sx={style}>
                     <div className="contentModal">
-                        <Button onClick={handleClose}>:V Apachurrame {`<--`}</Button>
+                        <Button onClick={terminar}>{`<--`} Volver</Button>
 
-                        <div className="contentVideo">
+                        {/* <div className="contentVideo">
                             dsds
+                        </div> */}
+                        <CardVideo index={indexMV} width={600} dataVideo={dataVQ[indexMV]}></CardVideo>
+                        <div className="modal__contentButton">
+
+                            <div className="modal__groupButtons">
+                                <Button onClick={ant} disabled={somethingRecording}>Anterior</Button>
+                                <Button onClick={ccc} disabled={somethingRecording}>Siguiente</Button>
+
+                            </div>
+                            {/* <Button onClick={terminar} style={dataVQ.every((el) => el.answered == true) ? {} : { display: 'none' }}>Terminar</Button> */}
+
+                            <div className="legenda">
+                                {dataVQ.map((d, i) => {
+
+                                    return d.answered ? <CheckCircleIcon key={i + 'lgen'} style={{ color: '#444', ...(i == indexMV ? { fontSize: '2rem' } : {}) }}></CheckCircleIcon> : <ErrorOutlineIcon key={i + 'lgen'} style={{ color: '#444', ...(i == indexMV ? { fontSize: '2rem' } : {}) }}></ErrorOutlineIcon>
+                                })}
+                            </div>
                         </div>
-                        <CardVideo stopFunction={stopFunction} index={indexMV} width={600} dataVideo={dataVQ[indexMV]}></CardVideo>
-                        <Button onClick={ant} disabled={somethingRecording}>Anterior</Button>
-                        <Button onClick={ccc} disabled={somethingRecording}>Siguiente</Button>
-                        <Button onClick={terminar} style={dataVQ.every((el) => el.answered == true) ? {} : { display: 'none' }}>Terminar</Button>
+
                         {/* <button onClick={dino}>dsada</button> */}
                     </div>
                 </Box>

@@ -32,4 +32,23 @@
     border: 0;
     border-radius: 8px;
     color: white;
+    position: relative;
+    transition: 0.2s;
+    bottom: 0;
+    cursor: pointer;
+}
+
+.containervq__sendButton button:active {
+    bottom: 2px;
+}
+
+.containervq__sendButton button:disabled:active {
+
+    bottom: 0;
+}
+
+
+.containervq__sendButton button:disabled {
+
+    opacity: 0.4;
 }

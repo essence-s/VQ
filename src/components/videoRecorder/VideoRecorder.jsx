@@ -6,11 +6,13 @@ import StopIcon from '@mui/icons-material/Stop';
 import PhotoCameraFrontIcon from '@mui/icons-material/PhotoCameraFront';
 import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
 import useVideoQuestion from "../../hooks/useVideoQuestion";
+import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong';
 // import { set } from "lodash";
 
-const VideoRecorder = forwardRef(({ fff, width, dataVideo, videos, setVideos, showRecButton }, ref) => {
+const VideoRecorder = ({ fff, width, dataVideo, videos, setVideos, showRecButton }) => {
     const [isRecording, setIsRecording] = useState(false);
     const videoRef = useRef(null);
+    // const videoRefDos = useRef(null);
     const streamRef = useRef(null);
     const [downloadLink, setDownloadLink] = useState("");
     const streamRecorderRef = useRef(null);
@@ -26,11 +28,13 @@ const VideoRecorder = forwardRef(({ fff, width, dataVideo, videos, setVideos, sh
     const totalDuration = 120
     const interval = useRef(null)
 
+
+    const videoRef2 = useRef(null);
+
     let { somethingRecording, setSomethingRecording } = useVideoQuestion()
 
     useEffect(() => {
-        console.log(dataVideo)
-        console.log(videos)
+
         setDownloadLink(videos.find((d) => d.idVideo == dataVideo.id)?.data ?? '')
     }, [dataVideo])
 
@@ -39,20 +43,17 @@ const VideoRecorder = forwardRef(({ fff, width, dataVideo, videos, setVideos, sh
     }, [videos])
 
     let clearIntervalTimerCounter = () => {
-        console.log(':V clear  ')
+
 
         clearInterval(interval.current)
         // interval.current = null
-        console.log(interval.current)
-        console.log(interval)
+
         setTimeCounter(0)
         // setCorriendo(false);
     }
     let createIntervalTimerCounter = () => {
 
-        console.log(':V create')
-        console.log(interval.current)
-        console.log(interval)
+
         interval.current = setInterval(() => {
             setTimeCounter((tiempo) => tiempo + 1);
         }, 1000);
@@ -94,8 +95,7 @@ const VideoRecorder = forwardRef(({ fff, width, dataVideo, videos, setVideos, sh
 
     useEffect(function () {
         setSomethingRecording(isRecording)
-        console.log(isRecording)
-        console.log(chunks.current)
+
         if (isRecording) {
             createIntervalTimerCounter()
             return;
@@ -133,7 +133,7 @@ const VideoRecorder = forwardRef(({ fff, width, dataVideo, videos, setVideos, sh
 
     function stopRecording() {
 
-        console.log(streamRecorderRef.current)
+
         if (!streamRecorderRef.current) {
             return;
         }
@@ -152,11 +152,7 @@ const VideoRecorder = forwardRef(({ fff, width, dataVideo, videos, setVideos, sh
 
     }
 
-    useImperativeHandle(ref, () => {
-        return {
-            stopRecording
-        };
-    }, []);
+
 
 
     useEffect(function () {
@@ -225,6 +221,16 @@ const VideoRecorder = forwardRef(({ fff, width, dataVideo, videos, setVideos, sh
         return () => clearIntervalTimerCounter()
     }, []);
 
+    const handlePlay = () => {
+
+        videoRef2.current.play();
+
+    }
+    const handlePause = () => {
+
+        videoRef2.current.pause();
+
+    }
     return (
         <div className="videoRecorder">
             {/* <div>
@@ -251,7 +257,9 @@ const VideoRecorder = forwardRef(({ fff, width, dataVideo, videos, setVideos, sh
                 <video ref={videoRef} autoPlay muted playsInline></video>
             </div>
             <div className="containerVideoET" style={!isRecording ? {} : { display: 'none' }}>
-                {downloadLink && <video style={{ width, height: '100%' }} src={downloadLink} controls></video>}
+
+                {downloadLink && <video style={{ width, height: '100%' }} src={downloadLink} ref={videoRef2} controls controlsList="nodownload,nofullscreen,noseekback,noseekforward"></video>}
+
                 {/* {downloadLink && (
                     <a href={downloadLink} download="file.mp4">
                         Descargar
@@ -262,18 +270,26 @@ const VideoRecorder = forwardRef(({ fff, width, dataVideo, videos, setVideos, sh
 
 
             <div className="option-VQ">
+
+                {/* <button onClick={handlePlay} disabled={isRecording}>
+                    play
+                </button>
+                <button onClick={handlePause} disabled={isRecording}>
+                    rrrr
+                </button> */}
                 {
                     showRecButton ?
                         isRecording ? <button onClick={stopRecording} disabled={!isRecording}>
                             <StopIcon></StopIcon>
                         </button> : <button onClick={startRecording} disabled={isRecording}>
-                            <VideoCameraFrontIcon></VideoCameraFrontIcon>
+
+                            <CenterFocusStrongIcon></CenterFocusStrongIcon>
                         </button> : ''
                 }
             </div>
             <div>{error && <p>{error.message}</p>}</div>
         </div >
     );
-})
+}
 
 export default VideoRecorder;

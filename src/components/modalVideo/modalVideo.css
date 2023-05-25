@@ -1,1 +1,19 @@
 .contentModal {}
+
+.modal__contentButton {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+
+}
+
+.modal__groupButtons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.legenda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

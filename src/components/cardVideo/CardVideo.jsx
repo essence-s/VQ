@@ -8,24 +8,21 @@ import { useEffect, useRef } from "react"
 
 
 
-const CardVideo = ({ dataVideo, width, index, stopFunction, showRecButton = true }) => {
+const CardVideo = ({ dataVideo, width, index, showRecButton = true }) => {
 
-    let { handleOpen, indexVQ, setDataVQ, videos, setVideos, setSomethingRecording } = useVideoQuestion()
+    let { handleOpen, indexVQ, setIndexVQ, dataVQ, setDataVQ, videos, setVideos, setSomethingRecording } = useVideoQuestion()
 
 
 
     let handleOandM = () => {
-        indexVQ.current = dataVideo.id
+        // indexVQ.current = dataVideo.id
         handleOpen()
+
+        let indexArray = dataVQ.findIndex((d) => d.id == dataVideo.id)
+        setIndexVQ(indexArray)
         setSomethingRecording(false)
     }
 
-
-
-    // useEffect(() => {
-    //     console.log(dataVideo)
-
-    // }, [dataVideo])
 
     let fff = (dtra) => {
         setDataVQ((prev) =>
@@ -43,7 +40,7 @@ const CardVideo = ({ dataVideo, width, index, stopFunction, showRecButton = true
     return (
         <div className="video-card" style={{ width }}>
             <div className="video-card__video">
-                <VideoRecorder showRecButton={showRecButton} ref={stopFunction} videos={videos} setVideos={setVideos} fff={fff} dataVideo={dataVideo} width={width}></VideoRecorder>
+                <VideoRecorder showRecButton={showRecButton} videos={videos} setVideos={setVideos} fff={fff} dataVideo={dataVideo} width={width}></VideoRecorder>
             </div>
             <div className="video-card__question-box" onClick={handleOandM}>
                 <div className="video-card__question-square"></div>

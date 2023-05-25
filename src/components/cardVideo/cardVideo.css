@@ -27,6 +27,8 @@
     border-radius: 0 0 10px 10px;
     display: flex;
     /* flex: 1; */
+    justify-content: center;
+    align-items: center;
 }
 
 .video-card__question-box .video-card__question-square {

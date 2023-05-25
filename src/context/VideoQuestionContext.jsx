@@ -24,11 +24,20 @@ let videoList = [
         answered: false,
         question: 'Como ha sido tu infancia?'
     },
-    {
-        id: '5VQ',
-        answered: false,
-        question: 'Este estadio está lleno?mas te vale'
-    }
+    // {
+    //     id: '5VQ',
+    //     answered: false,
+    //     question: 'Este estadio está lleno?mas te vale'
+    // },
+    // {
+    //     id: '6VQ',
+    //     answered: false,
+    //     question: 'has tenido un dinosaurio?'
+    // }, {
+    //     id: '7VQ',
+    //     answered: false,
+    //     question: 'tu papa es hombre?'
+    // }
 ]
 
 // let videosArray = []
@@ -46,21 +55,21 @@ const VQProvider = ({ children, data }) => {
 
     const [somethingRecording, setSomethingRecording] = useState(false)
 
-    let indexVQ = useRef()
+    let [indexVQ, setIndexVQ] = useState()
 
-    useEffect(() => {
-        console.log(dataVQ)
-    }, [dataVQ])
-    useEffect(() => {
-        console.log(videos)
-    }, [videos])
+    // useEffect(() => {
+
+    // }, [dataVQ])
+    // useEffect(() => {
+
+    // }, [videos])
 
     return (
         <VQContext.Provider value={{
             data,
             dataVQ, setDataVQ,
             open, handleClose, handleOpen,
-            indexVQ,
+            indexVQ, setIndexVQ,
             videos, setVideos,
             somethingRecording, setSomethingRecording
 

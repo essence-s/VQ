@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import { VQContext } from '../context/VideoQuestionContext'
 const useVideoQuestion = () => {
 
-    let { dataVQ, setDataVQ, open, handleClose, handleOpen, indexVQ, videos, setVideos } = useContext(VQContext)
+    let { dataVQ, setDataVQ, open, handleClose, handleOpen, indexVQ, videos, setVideos, somethingRecording, setSomethingRecording } = useContext(VQContext)
     // let [videoQuestion, setVideoQuestion] = useState([])
 
     let getDataVQ = () => {
@@ -15,6 +15,7 @@ const useVideoQuestion = () => {
         open, handleClose, handleOpen,
         indexVQ,
         videos, setVideos,
+        somethingRecording, setSomethingRecording
     }
 }
 

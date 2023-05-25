@@ -44,6 +44,8 @@ const VQProvider = ({ children, data }) => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
+    const [somethingRecording, setSomethingRecording] = useState(false)
+
     let indexVQ = useRef()
 
     useEffect(() => {
@@ -60,6 +62,7 @@ const VQProvider = ({ children, data }) => {
             open, handleClose, handleOpen,
             indexVQ,
             videos, setVideos,
+            somethingRecording, setSomethingRecording
 
         }}>
             {children}

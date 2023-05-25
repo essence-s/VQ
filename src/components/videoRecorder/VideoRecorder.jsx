@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import './videoRecorder.css'
 
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import PhotoCameraFrontIcon from '@mui/icons-material/PhotoCameraFront';
 import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
+import useVideoQuestion from "../../hooks/useVideoQuestion";
 // import { set } from "lodash";
 
-const VideoRecorder = ({ fff, width, dataVideo, videos, setVideos }) => {
+const VideoRecorder = forwardRef(({ fff, width, dataVideo, videos, setVideos, showRecButton }, ref) => {
     const [isRecording, setIsRecording] = useState(false);
     const videoRef = useRef(null);
     const streamRef = useRef(null);
@@ -25,11 +26,17 @@ const VideoRecorder = ({ fff, width, dataVideo, videos, setVideos }) => {
     const totalDuration = 120
     const interval = useRef(null)
 
+    let { somethingRecording, setSomethingRecording } = useVideoQuestion()
+
     useEffect(() => {
         console.log(dataVideo)
         console.log(videos)
         setDownloadLink(videos.find((d) => d.idVideo == dataVideo.id)?.data ?? '')
     }, [dataVideo])
+
+    useEffect(() => {
+        setDownloadLink(videos.find((d) => d.idVideo == dataVideo.id)?.data ?? '')
+    }, [videos])
 
     let clearIntervalTimerCounter = () => {
         console.log(':V clear  ')
@@ -79,12 +86,14 @@ const VideoRecorder = ({ fff, width, dataVideo, videos, setVideos }) => {
             }
         };
         setIsRecording(true);
+
         timerRef.current = setTimeout(() => {
             stopRecording();
         }, 2 * 60 * 1000); // 2 minutos en milisegundos
     }
 
     useEffect(function () {
+        setSomethingRecording(isRecording)
         console.log(isRecording)
         console.log(chunks.current)
         if (isRecording) {
@@ -98,7 +107,7 @@ const VideoRecorder = ({ fff, width, dataVideo, videos, setVideos }) => {
         const blob = new Blob(chunks.current, {
             type: "video/x-matroska;codecs=avc1,opus",
         });
-        setDownloadLink(URL.createObjectURL(blob));
+        // setDownloadLink(URL.createObjectURL(blob));
         setVideos((sv) => {
             if (sv.some((dd) => dd.idVideo == dataVideo.id)) {
                 return sv.map((d) => {
@@ -142,6 +151,13 @@ const VideoRecorder = ({ fff, width, dataVideo, videos, setVideos }) => {
 
 
     }
+
+    useImperativeHandle(ref, () => {
+        return {
+            stopRecording
+        };
+    }, []);
+
 
     useEffect(function () {
         async function prepareStream() {
@@ -234,8 +250,8 @@ const VideoRecorder = ({ fff, width, dataVideo, videos, setVideos }) => {
             <div style={isRecording ? {} : { display: 'none' }}>
                 <video ref={videoRef} autoPlay muted playsInline></video>
             </div>
-            <div style={!isRecording ? {} : { display: 'none' }}>
-                {downloadLink && <video style={{ width }} src={downloadLink} controls></video>}
+            <div className="containerVideoET" style={!isRecording ? {} : { display: 'none' }}>
+                {downloadLink && <video style={{ width, height: '100%' }} src={downloadLink} controls></video>}
                 {/* {downloadLink && (
                     <a href={downloadLink} download="file.mp4">
                         Descargar
@@ -247,16 +263,17 @@ const VideoRecorder = ({ fff, width, dataVideo, videos, setVideos }) => {
 
             <div className="option-VQ">
                 {
-                    isRecording ? <button onClick={stopRecording} disabled={!isRecording}>
-                        <StopIcon></StopIcon>
-                    </button> : <button onClick={startRecording} disabled={isRecording}>
-                        <VideoCameraFrontIcon></VideoCameraFrontIcon>
-                    </button>
+                    showRecButton ?
+                        isRecording ? <button onClick={stopRecording} disabled={!isRecording}>
+                            <StopIcon></StopIcon>
+                        </button> : <button onClick={startRecording} disabled={isRecording}>
+                            <VideoCameraFrontIcon></VideoCameraFrontIcon>
+                        </button> : ''
                 }
             </div>
             <div>{error && <p>{error.message}</p>}</div>
         </div >
     );
-}
+})
 
 export default VideoRecorder;

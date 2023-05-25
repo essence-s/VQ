@@ -2,20 +2,25 @@ import { Button } from "@mui/material"
 import useVideoQuestion from "../../hooks/useVideoQuestion"
 import "./cardVideo.css"
 import VideoRecorder from "../videoRecorder/VideoRecorder"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 
 
 
 
 
-const CardVideo = ({ dataVideo, width, index }) => {
+const CardVideo = ({ dataVideo, width, index, stopFunction, showRecButton = true }) => {
 
-    let { handleOpen, indexVQ, setDataVQ, videos, setVideos } = useVideoQuestion()
+    let { handleOpen, indexVQ, setDataVQ, videos, setVideos, setSomethingRecording } = useVideoQuestion()
+
+
 
     let handleOandM = () => {
         indexVQ.current = dataVideo.id
         handleOpen()
+        setSomethingRecording(false)
     }
+
+
 
     // useEffect(() => {
     //     console.log(dataVideo)
@@ -38,7 +43,7 @@ const CardVideo = ({ dataVideo, width, index }) => {
     return (
         <div className="video-card" style={{ width }}>
             <div className="video-card__video">
-                <VideoRecorder videos={videos} setVideos={setVideos} fff={fff} dataVideo={dataVideo} width={width}></VideoRecorder>
+                <VideoRecorder showRecButton={showRecButton} ref={stopFunction} videos={videos} setVideos={setVideos} fff={fff} dataVideo={dataVideo} width={width}></VideoRecorder>
             </div>
             <div className="video-card__question-box" onClick={handleOandM}>
                 <div className="video-card__question-square"></div>
@@ -46,6 +51,7 @@ const CardVideo = ({ dataVideo, width, index }) => {
                 {/* <div className="video-card__question-text">{dataVideo.question}</div> */}
                 <div className="video-card__question-square"></div>
             </div>
+            {/* <button onClick={dino}>dsada</button> */}
         </div>
     )
 }

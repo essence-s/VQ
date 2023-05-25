@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import "./modalVideo.css"
 import { Button, Box, Modal } from "@mui/material"
 import useVideoQuestion from "../../hooks/useVideoQuestion";
@@ -22,7 +22,14 @@ const ModalVideo = () => {
 
     // let [nextOrSend, setNextOrSend] = useState(true)
     let [indexMV, setIndexMV] = useState(0)
-    const { dataVQ, setDataVQ, open, handleClose, indexVQ } = useVideoQuestion()
+    const { dataVQ, setDataVQ, open, handleClose, indexVQ, somethingRecording } = useVideoQuestion()
+
+
+    let stopFunction = useRef()
+
+    // let dino = () => {
+    //     stopFunction.current.stopRecording()
+    // }
 
     useEffect(() => {
         // setTimeout(() => {
@@ -35,12 +42,15 @@ const ModalVideo = () => {
     }, [indexVQ.current])
 
     const ccc = () => {
+        stopFunction.current.stopRecording()
+
         if (indexMV < dataVQ.length - 1) {
             setIndexMV(indexMV + 1)
         }
     }
 
     const ant = () => {
+
         if (indexMV > 0) {
             setIndexMV(indexMV - 1)
         }
@@ -64,11 +74,11 @@ const ModalVideo = () => {
                         <div className="contentVideo">
                             dsds
                         </div>
-                        <CardVideo index={indexMV} width={600} dataVideo={dataVQ[indexMV]}></CardVideo>
-                        <Button onClick={ant}>Anterior</Button>
-                        <Button onClick={ccc}>Siguiente</Button>
+                        <CardVideo stopFunction={stopFunction} index={indexMV} width={600} dataVideo={dataVQ[indexMV]}></CardVideo>
+                        <Button onClick={ant} disabled={somethingRecording}>Anterior</Button>
+                        <Button onClick={ccc} disabled={somethingRecording}>Siguiente</Button>
                         <Button onClick={terminar} style={dataVQ.every((el) => el.answered == true) ? {} : { display: 'none' }}>Terminar</Button>
-
+                        {/* <button onClick={dino}>dsada</button> */}
                     </div>
                 </Box>
             </Modal>

@@ -37,6 +37,10 @@
     animation: blink 0.5s infinite alternate;
 }
 
+.containerVideoET {
+    height: 100%;
+}
+
 
 @keyframes blink {
 
